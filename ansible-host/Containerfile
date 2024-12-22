@@ -1,0 +1,29 @@
+FROM ubi9-init
+
+ARG ROOT_PASSWORD=root
+ARG ANSIBLE_USER=ansible
+ARG ANSIBLE_PASSWORD=ansible
+
+RUN dnf makecache && \
+    dnf -y update && \
+    dnf -y upgrade && \
+    dnf -y install \
+        sudo \
+        openssh-server && \
+    dnf clean all
+
+# configure root
+RUN echo "root:${ROOT_PASSWORD}" | chpasswd
+
+# create ansible user
+RUN useradd -m -s /bin/bash ${ANSIBLE_USER} && \
+    echo "${ANSIBLE_USER}:${ANSIBLE_PASSWORD}" | chpasswd && \
+    echo "${ANSIBLE_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# SSHD setup
+RUN sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#*UsePAM.*/UsePAM yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+RUN systemctl enable sshd
+

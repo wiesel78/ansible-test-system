@@ -1,0 +1,32 @@
+services:
+  ansible-host:
+    container_name: ansible-host
+    build:
+      context: .
+      dockerfile: ansible-host/Containerfile
+      args:
+        - ROOT_PASSWORD=root
+        - ANSIBLE_USER=ansible
+        - ANSIBLE_PASSWORD=ansible
+    ports:
+      - "2222:22"
+    healthcheck:
+      test: ["CMD-SHELL", "ss -lnt | grep -q ':22'"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+      start_period: 5s
+
+  ansible-control:
+    container_name: ansible-control
+    build:
+      context: .
+      dockerfile: ansible-control/Containerfile
+      args:
+        - ROOT_PASSWORD=root
+        - ANSIBLE_USER=ansible
+        - ANSIBLE_PASSWORD=ansible
+    depends_on:
+      - ansible-host
+    volumes:
+      - ./projects:/home/ansible/projects

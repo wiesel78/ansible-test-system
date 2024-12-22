@@ -1,0 +1,42 @@
+FROM ubi9-init
+
+ARG ROOT_PASSWORD=root
+ARG ANSIBLE_USER=ansible
+ARG ANSIBLE_PASSWORD=ansible
+
+ENV ROOT_PASSWORD=${ROOT_PASSWORD}
+ENV ANSIBLE_USER=${ANSIBLE_USER}
+ENV ANSIBLE_PASSWORD=${ANSIBLE_PASSWORD}
+ENV ANSIBLE_HOST_ADDRESS="ansible-host"
+
+RUN dnf makecache && \
+    dnf -y update && \
+    dnf -y upgrade && \
+    dnf -y install \
+        sudo \
+        sshpass \
+        openssh-clients \
+        git \
+        python3-pip && \
+    dnf clean all
+
+# configure root
+RUN echo "root:${ROOT_PASSWORD}" | chpasswd
+
+# create and configure ansible user
+RUN useradd -m -s /bin/bash ${ANSIBLE_USER} && \
+    echo "${ANSIBLE_USER}:${ANSIBLE_PASSWORD}" | chpasswd && \
+    echo "${ANSIBLE_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER ${ANSIBLE_USER}
+RUN ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+
+COPY --chown=${ANSIBLE_USER}:root --chmod=770 /ansible-control/scripts /opt/scripts
+
+# install ansible
+RUN pip3 install --no-cache-dir ansible
+RUN mkdir -p "/home/${ANSIBLE_USER}/projects"
+
+WORKDIR "/home/${ANSIBLE_USER}/projects"
+
+CMD /opt/scripts/start.sh && tail -f /dev/null
