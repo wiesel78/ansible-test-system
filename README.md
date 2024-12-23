@@ -22,9 +22,10 @@ To access the control container, run the following command:
 podman-compose exec ansible-control bash
 ```
 
-Go to the test playbook directory and run the playbook.
+Go to the test playbook directory and run the playbook. The playbook directory
+is mounted in the control container at `/home/ansible/playbooks`.
 
 ```bash
-cd hello-world
+cd minimal
 ansible-playbook -i inventory.ini playbook.yml
 ```

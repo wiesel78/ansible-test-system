@@ -35,8 +35,8 @@ COPY --chown=${ANSIBLE_USER}:root --chmod=770 /ansible-control/scripts /opt/scri
 
 # install ansible
 RUN pip3 install --no-cache-dir ansible
-RUN mkdir -p "/home/${ANSIBLE_USER}/projects"
+RUN mkdir -p "/home/${ANSIBLE_USER}/playbooks"
 
-WORKDIR "/home/${ANSIBLE_USER}/projects"
+WORKDIR "/home/${ANSIBLE_USER}/playbooks"
 
 CMD /opt/scripts/start.sh && tail -f /dev/null

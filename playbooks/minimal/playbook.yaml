@@ -1,5 +1,5 @@
 - name: Example Playbook
-  hosts: internal
+  hosts: testservers
   tasks:
     - name: Ping the hosts
       ansible.builtin.ping:

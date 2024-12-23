@@ -1,4 +1,4 @@
-internal:
+testservers:
   hosts:
     host: 
       ansible_host: ansible-host

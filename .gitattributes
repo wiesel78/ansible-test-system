@@ -1,2 +1,2 @@
 ansible-control/scripts/** text eol=lf
-projects/** text eol=lf
+playbooks/** text eol=lf
