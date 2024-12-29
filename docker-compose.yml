@@ -10,6 +10,7 @@ services:
         - ANSIBLE_PASSWORD=ansible
     ports:
       - "2222:22"
+      - "8080:8080"
     healthcheck:
       test: ["CMD-SHELL", "ss -lnt | grep -q ':22'"]
       interval: 5s

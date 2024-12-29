@@ -1,0 +1,40 @@
+- name: Update web servers
+  hosts: webservers
+  remote_user: "{{ ansible_user }}"
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Ensure nginx is at the latest version
+      ansible.builtin.package:
+        name: nginx
+        state: latest
+
+    - name: Ensure nginx has basic configuration
+      ansible.builtin.template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+
+    - name: Ensure nginx has configuration for serve static sites
+      ansible.builtin.template:
+        src: templates/conf.d/webserver.conf.j2
+        dest: /etc/nginx/conf.d/webserver.conf
+
+    - name: Ensure /var/www directory exists
+      ansible.builtin.file:
+        path: /var/www
+        state: directory
+        mode: 0550
+        owner: nginx
+        group: root
+
+    - name: Ensure static sites are available
+      ansible.builtin.template:
+        src: templates/var/www/index.html.j2
+        dest: /var/www/index.html
+
+    - name: Ensure nginx is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
