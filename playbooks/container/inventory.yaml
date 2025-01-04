@@ -1,0 +1,7 @@
+webservers:
+  hosts:
+    host: 
+      ansible_host: ansible-host
+      ssh_port: 22
+  vars:
+    ansible_user: ansible

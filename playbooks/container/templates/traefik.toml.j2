@@ -1,0 +1,42 @@
+# traefik.toml
+
+#------------------------------------------------
+# 1. Entry Points
+#------------------------------------------------
+[entryPoints]
+  [entryPoints.web]
+    address = ":8080"
+
+  [entryPoints.websecure]
+    address = ":8443"
+
+#------------------------------------------------
+# 2. API / Dashboard
+#------------------------------------------------
+[api]
+  dashboard = true
+  insecure = false
+
+#------------------------------------------------
+# 3. Logs
+#------------------------------------------------
+[log]
+  # Possible values: "DEBUG", "INFO", "WARN", "ERROR"
+  level = "DEBUG"
+
+[accessLog]
+
+#------------------------------------------------
+# 4. Providers
+#------------------------------------------------
+[providers]
+  # Docker Provider
+  [providers.docker]
+    endpoint = "unix:///var/run/docker.sock"
+    exposedByDefault = false
+    watch = true
+
+  # File Provider (for dynamic configuration)
+  [providers.file]
+    directory = "/etc/traefik/dynamic/"
+    watch = true
