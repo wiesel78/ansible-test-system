@@ -8,6 +8,7 @@ services:
         - ROOT_PASSWORD=root
         - ANSIBLE_USER=ansible
         - ANSIBLE_PASSWORD=ansible
+    privileged: true
     ports:
       - "2222:22"
       - "8080:8080"
