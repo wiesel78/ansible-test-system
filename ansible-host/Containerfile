@@ -10,6 +10,7 @@ RUN dnf makecache && \
     dnf -y install \
         sudo \
         openssh-server && \
+        openssh-clients && \
     dnf clean all
 
 # configure root

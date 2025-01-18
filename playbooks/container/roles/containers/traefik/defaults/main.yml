@@ -1,0 +1,11 @@
+---
+
+traefik_enabled: true
+traefik_identifier: traefik
+traefik_version: v3.2.2
+traefik_base_path: "/{{ traefik_identifier }}"
+traefik_config_dir_path: "{{ traefik_base_path }}/config"
+
+traefik_container_image: "{{ traefik_container_image_registry_prefix }}library/traefik:{{ traefik_container_image_tag }}"
+traefik_container_image_tag: "{{ traefik_version}}"
+traefik_container_image_registry_prefix: "docker.io/"

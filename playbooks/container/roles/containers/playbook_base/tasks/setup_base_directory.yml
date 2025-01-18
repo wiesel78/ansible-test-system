@@ -1,0 +1,9 @@
+---
+
+- name: Ensure containers base path are available
+  ansible.builtin.file:
+    path: "{{ containers_playbook_base_path }}"
+    state: directory
+    mode: "{{ containers_playbook_base_path_mode }}"
+    owner: "{{ containers_playbook_uid }}"
+    group: "{{ containers_playbook_gid }}"

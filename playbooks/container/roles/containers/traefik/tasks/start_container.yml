@@ -1,0 +1,14 @@
+---
+
+- name: Start Traefik container
+  podman_container:
+    image: "{{ traefik_container_image }}"
+    name: "{{ traefik_identifier }}"
+    state: "{{ traefik_enabled | ternary('started', 'absent') }}"
+    detach: yes
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - /container/traefik:/etc/traefik
+      - /run/podman/podman.sock:/var/run/docker.sock:Z

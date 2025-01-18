@@ -1,0 +1,15 @@
+---
+
+- name: Create Traefik base directory
+  file:
+    path: /container/traefik
+    state: directory
+    mode: 0550
+    owner: ansible
+    group: root
+
+- name: Copy Traefik configuration file
+  copy:
+    src: templates/traefik.toml.j2
+    dest: /container/traefik/traefik.toml
+    mode: 0644

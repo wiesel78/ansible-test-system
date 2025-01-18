@@ -1,0 +1,14 @@
+---
+
+- name: Start Grafana container
+  podman_container:
+    image: "{{ grafana_container_image }}"
+    name: "{{ grafana_identifier }}"
+    state: "{{ grafana_enabled | ternary('started', 'absent') }}"
+    detach: yes
+    labels:
+      traefik.enable: "{{ traefik_enabled }}"
+      traefik.http.routers.grafana.rule: Host(`grafana.containers.internal`)
+      traefik.http.services.grafana.loadbalancer.server.port: "{{ grafana_container_port}}"
+    env:
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"

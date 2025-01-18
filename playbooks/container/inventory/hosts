@@ -1,0 +1,2 @@
+[containers]
+ansible-host ansible_host=ansible-host ansible_ssh_user=ansible ssh_port=22

@@ -1,0 +1,11 @@
+---
+
+- block:
+    - ansible.builtin.include_tasks: "{{ role_path }}/tasks/setup_configuration.yml"
+  tags:
+    - always
+
+- block:
+    - ansible.builtin.include_tasks: "{{ role_path }}/tasks/start_container.yml"
+  tags:
+    - always

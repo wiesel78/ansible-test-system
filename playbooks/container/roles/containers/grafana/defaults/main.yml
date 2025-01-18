@@ -1,0 +1,13 @@
+---
+
+grafana_enabled: true
+grafana_identifier: grafana
+grafana_version: latest
+
+grafana_container_image: "{{ grafana_container_image_registry_prefix }}grafana/grafana-oss:{{ grafana_container_image_tag }}"
+grafana_container_image_tag: "{{ grafana_version}}"
+grafana_container_image_registry_prefix: "docker.io/"
+
+grafana_container_port: 3000
+
+grafana_admin_password: admin

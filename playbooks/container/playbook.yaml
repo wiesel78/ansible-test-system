@@ -1,5 +1,5 @@
 - name: Update web servers
-  hosts: webservers
+  hosts: containers
   remote_user: "{{ ansible_user }}"
   become: yes
   become_method: sudo
@@ -7,49 +7,14 @@
   collections:
     - containers.podman
 
-  tasks:
-    - name: Ensure podman is at the latest version
-      ansible.builtin.package:
-        name: podman
-        state: latest
 
-    - name: Ensure the podman.socket exist
-      systemd:
-        name: podman.socket
-        state: started
-        enabled: yes
-
-    - name: Create project directory
-      file:
-        path: /container
-        state: directory
-        mode: 0550
-        owner: ansible
-        group: root
-
-    - name: Create Traefik configuration directory
-      file:
-        path: /container/traefik
-        state: directory
-        mode: 0550
-        owner: ansible
-        group: root
-
-    - name: Copy Traefik configuration file
-      copy:
-        src: templates/traefik.toml.j2
-        dest: /container/traefik/traefik.toml
-        mode: 0644
-
-    - name: Start Traefik container
-      podman_container:
-        image: docker.io/library/traefik:v3.1
-        name: traefik
-        state: started
-        detach: yes
-        ports:
-          - "8080:8080"
-          - "8443:8443"
-        volumes:
-          - /container/traefik:/etc/traefik
-          - /run/podman/podman.sock:/var/run/docker.sock:Z
+  roles:
+    - role: containers/playbook_base
+      tags:
+        - always
+    - role: containers/traefik
+      tags:
+        - always
+    - role: containers/grafana
+      tags:
+        - always

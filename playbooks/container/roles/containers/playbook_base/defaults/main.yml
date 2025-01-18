@@ -1,0 +1,15 @@
+---
+
+containers_playbook_identifier: containers
+
+containers_playbook_service_identifier_prefix: "{{ containers_playbook_identifier }}-"
+containers_playbook_service_base_directory_name_prefix: ""
+
+containers_playbook_base_path: "/{{ containers_playbook_identifier }}"
+containers_playbook_base_path_mode: "750"
+
+containers_playbook_user_username: "{{ containers_playbook_identifier }}"
+containers_playbook_user_groupname: "{{ containers_playbook_identifier }}"
+containers_playbook_user_home: "{{ containers_playbook_base_path }}"
+containers_playbook_uid: ~
+containers_playbook_gid: ~

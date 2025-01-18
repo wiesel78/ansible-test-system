@@ -1,0 +1,10 @@
+---
+
+dependencies: []
+galaxy_info:
+  author: "John Doe"
+  description: "This role installs and configures a web server (traefik)."
+  license: "MIT"
+  min_ansible_version: "2.11"
+collections:
+  - containers.podman

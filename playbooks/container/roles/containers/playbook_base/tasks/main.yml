@@ -1,0 +1,16 @@
+---
+
+- block:
+    - ansible.builtin.include_tasks: "{{ role_path }}/tasks/setup_podman.yml"
+  tags:
+    - always
+
+- block:
+    - ansible.builtin.include_tasks: "{{ role_path }}/tasks/setup_user.yml"
+  tags:
+    - always
+
+- block:
+    - ansible.builtin.include_tasks: "{{ role_path }}/tasks/setup_base_directory.yml"
+  tags:
+    - always

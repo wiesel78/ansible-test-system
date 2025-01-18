@@ -1,0 +1,14 @@
+---
+
+- when: not containers_playbook_uid and not containers_playbook_gid
+  block:
+    - name: Ensure podman is at the latest version
+      ansible.builtin.package:
+        name: podman
+        state: latest
+
+    - name: Ensure the podman.socket exist
+      systemd:
+        name: podman.socket
+        state: started
+        enabled: yes
