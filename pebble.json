@@ -1,0 +1,23 @@
+{
+  "pebble": {
+    "listenAddress": ":14000",
+    "certificate": "/test/certs/pebble.pem",
+    "privateKey": "/test/certs/pebble.key",
+    "http01": {
+      "port": 5002
+    },
+    "tlsALPN01": {
+      "port": 5001
+    },
+    "dnsserver": {
+      "port": 8053
+    },
+    "management": {
+      "listenAddress": ":15000",
+      "secureListenAddress": ""
+    },
+    "ocsp": {
+      "respondToEverything": true
+    }
+  }
+}

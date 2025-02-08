@@ -1,0 +1,12 @@
+.:53 {
+    log
+    cache 30
+    hosts {
+        172.30.0.10 coredns.containers.internal
+        172.30.0.11 host.containers.internal
+        172.30.0.12 control.containers.internal
+        172.30.0.13 pebble.containers.internal
+        fallthrough
+    }
+    forward . 8.8.8.8 1.1.1.1
+}
