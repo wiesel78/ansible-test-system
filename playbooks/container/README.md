@@ -12,7 +12,7 @@ and glue them together with a traefik container.
 ## Run
 
 ```bash
-ansible-playbook -i inventory.ini playbook.yml
+ansible-playbook -i inventory/ playbook.yml
 ```
 
 ## Usage
